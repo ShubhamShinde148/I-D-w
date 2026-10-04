@@ -17,7 +17,7 @@ A web-based ID card generator for Maharashtra Government and Zilla Parishad Pune
 
 1. Clone or download the repository:
    ```bash
-   git clone https://github.com/ShubhamShinde148/I-D-.git
+   git clone https://github.com/ShubhamShinde148/I-D-w.git
    ```
 2. Open `index.html` in any modern web browser, or serve it locally:
    ```bash
