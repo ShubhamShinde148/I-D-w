@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: transparent;
+      width: 1024px;
+      height: 1024px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    svg {
+      width: 1024px;
+      height: 1024px;
+    }
+
+    .stamp-text {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      font-weight: 900;
+      fill: #0c2878;
+      letter-spacing: 1.5px;
+    }
+  </style>
+</head>
+
+<body>
+  <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Subtle rubber stamp texture filter -->
+      <filter id="stamp-texture" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.0" xChannelSelector="R" yChannelSelector="G"
+          result="displaced" />
+      </filter>
+
+      <!-- Top Arc: from 9 o'clock (147, 512) over the top to 3 o'clock (877, 512) -->
+      <path id="topArc" d="M 147,512 A 365,365 0 0,1 877,512" fill="none" />
+
+      <!-- Bottom Arc: from 3 o'clock (877, 512) under the bottom to 9 o'clock (147, 512) -->
+      <path id="bottomArc" d="M 877,512 A 365,365 0 0,1 147,512" fill="none" />
+    </defs>
+
+    <!-- Group with slight stamp rotation (-16 deg) matching physical stamp in photo -->
+    <g transform="rotate(-16 512 512)" filter="url(#stamp-texture)">
+      <!-- Outer thin circle 1: R=480 -->
+      <circle cx="512" cy="512" r="480" fill="none" stroke="#0c2878" stroke-width="8" />
+
+      <!-- Outer thin circle 2: R=458 -->
+      <circle cx="512" cy="512" r="458" fill="none" stroke="#0c2878" stroke-width="8" />
+
+      <!-- Inner circle: R=278 -->
+      <circle cx="512" cy="512" r="278" fill="none" stroke="#0c2878" stroke-width="9" />
+
+      <!-- Top Text: पंचायत समिती आंबेगाव (Centered at top) -->
+      <text class="stamp-text" font-size="62px">
+        <textPath href="#topArc" startOffset="50%" text-anchor="middle">
+          पंचायत समिती आंबेगाव
+        </textPath>
+      </text>
+
+      <!-- Right Dot: (around 3 o'clock, x=877, y=512) -->
+      <circle cx="877" cy="512" r="18" fill="#0c2878" />
+
+      <!-- Bottom Text: ता. आंबेगाव on left, जि. पुणे on right -->
+      <text class="stamp-text" font-size="58px">
+        <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">
+          जि. पुणे &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ता. आंबेगाव
+        </textPath>
+      </text>
+
+      <!-- Left Dot: (around 9 o'clock, x=147, y=512) -->
+      <circle cx="147" cy="512" r="18" fill="#0c2878" />
+    </g>
+  </svg>
+</body>
+
+</html>
