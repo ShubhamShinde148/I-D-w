@@ -1191,3 +1191,51 @@ function showToast(message, type = "normal") {
     setTimeout(() => toast.remove(), 300);
   }, 2600);
 }
+
+// ============================================================================
+// MAINTENANCE MODE LOGIC & ADMIN BYPASS
+// ============================================================================
+(function initMaintenanceMode() {
+  function setupMaintenance() {
+    const overlay = document.getElementById("maintenanceOverlay");
+    const adminBar = document.getElementById("adminMaintenanceBar");
+    const btnAdminUnlock = document.getElementById("btnAdminUnlock");
+    const btnRelock = document.getElementById("btnRelockMaintenance");
+
+    // Check if admin previously unlocked in this session
+    if (sessionStorage.getItem("admin_maintenance_bypass") === "true") {
+      if (overlay) overlay.style.display = "none";
+      if (adminBar) adminBar.style.display = "flex";
+    }
+
+    if (btnAdminUnlock) {
+      btnAdminUnlock.addEventListener("click", () => {
+        // Allow developer/admin to preview without locking themselves out
+        if (overlay) overlay.style.display = "none";
+        if (adminBar) adminBar.style.display = "flex";
+        sessionStorage.setItem("admin_maintenance_bypass", "true");
+        if (typeof showToast === "function") {
+          showToast("ॲडमिन प्रीव्ह्यू मोड सक्रिय • Admin Mode Active", "normal");
+        }
+      });
+    }
+
+    if (btnRelock) {
+      btnRelock.addEventListener("click", () => {
+        if (overlay) overlay.style.display = "flex";
+        if (adminBar) adminBar.style.display = "none";
+        sessionStorage.removeItem("admin_maintenance_bypass");
+        if (typeof showToast === "function") {
+          showToast("वेबसाइट पुन्हा देखभालीखाली (Locked) केली आहे", "normal");
+        }
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupMaintenance);
+  } else {
+    setupMaintenance();
+  }
+})();
+
